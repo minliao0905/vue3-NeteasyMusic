@@ -1,0 +1,141 @@
+.vbestui-progress {
+  width: 100%;
+  padding: 10px 0px;
+}
+.vbestui-progress-outstyle {
+  width: 100%;
+  height: 5px;
+  border-radius: 4px;
+  background: #f3f3f3;
+  cursor: pointer;
+}
+.vbestui-progress-innerstyle {
+  background: var(--primary);
+  width: 40px;
+  height: 100%;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.4s;
+}
+.vbestui-progress-loadbar {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  margin: auto;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 1px var(--border);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.vbestui-progress-loadbar-circle {
+  background: var(--primary);
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  position: absolute;
+  margin: auto;
+}
+/**垂直显示样式 */
+.vbestui-progress-vertical {
+  display: inline-block;
+  height: 100%;
+  padding: 0px 10px;
+}
+.vbestui-progress-outstyle-vertical {
+  background: #f3f3f3;
+  width: 5px;
+  height: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+.vbestui-progress-innerstyle-vertical {
+  background: var(--primary);
+  height: 60%;
+  width: 100%;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 0px;
+  transition: all 0.4s;
+  display: flex;
+  justify-content: center;
+}
+.vbestui-progress-loadbar-vertical {
+  position: absolute;
+  top: 0px;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 1px var(--border);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.vbestui-progress-active::before {
+  content: " ";
+  position: absolute;
+  opacity: 0;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background: #fff;
+  animation: progress-active 2s var(--animation-ease-out) infinite;
+}
+.vbestui-progress-vertical-active::before {
+  content: " ";
+  position: absolute;
+  opacity: 0;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background: #fff;
+  animation: progress-active-vertical 2s var(--animation-ease-out) infinite;
+}
+/* 滑块显示隐藏动画 */
+.vbestui-progress-opacity-enter-active{
+  animation: baseFade var(--animation-base-time);
+}
+.vbestui-progress-opacity-leave-active{
+  animation: baseFade var(--animation-base-time) reverse;
+}
+@keyframes progress-active {
+  0% {
+    opacity: 0.4;
+    width: 0;
+    border-radius: 0px;
+  }
+  100% {
+    opacity: 0;
+    width: 100%;
+    border-radius: 12px;
+  }
+}
+
+@keyframes progress-active-vertical {
+  0% {
+    opacity: 0.4;
+    height: 0;
+    border-radius: 0px;
+  }
+  100% {
+    opacity: 0;
+    height: 100%;
+    border-radius: 12px;
+  }
+}
+
+@keyframes baseFade {
+  from{
+      opacity: 0;
+  }
+  to{
+      opacity: 1;
+  }
+}
