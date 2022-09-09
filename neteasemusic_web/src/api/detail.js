@@ -17,7 +17,15 @@ export function _getMusicUrl(id){
         }
     })
 }
-
+/**判断当前音乐是否可用 */
+export function _checkMusicById(id){
+    return request({
+        url:'/check/music',
+        params:{
+            id :id
+        }
+    })
+}
 /**歌曲评论 */
 export function _musicRecommend(id,limit,offset){
     return request({

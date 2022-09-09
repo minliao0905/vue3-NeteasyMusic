@@ -1,4 +1,4 @@
-import { _getMusicUrl } from "@/api/detail"
+import { _checkMusicById, _getMusicUrl } from "@/api/detail"
 import {Song} from "@/Play/playing";
 
 export const playMusic = {
@@ -23,23 +23,32 @@ export const playMusic = {
             // console.log(...musicList)   //输出查看
             let url = null;
             let playList = [];
-            for (let i = 0, length = musicList.length; i < length; i++) {
-                _getMusicUrl(musicList[i].id).then(res => {
-                    url = res.data.data[0].url;
-                    /**Song 构造函数参数：1.下标、2.歌曲、3.歌曲路径、4.歌曲id */
-                    let song = new Song(i, musicList[i], url, musicList[i].id);
-                    playList.push(song);
-                    if (i == musicList.length - 1) {
-                        /**全局播放事件
-                         * @playList         处理后的播放列表
-                         * @index            音乐列表中音乐开始播放的位置
-                         * @musicList        歌曲列白，用于播放器中歌单展示
-                         * @id               唯一标识，用于显示当前播放歌曲的列表
-                         */
-                        this.$bus.emit("playMusic", playList, index,musicList,id);
+            for (let i = 0, length = musicList.length; i < 1; i++) {
+                // 检查当前音乐是否可播放
+                _checkMusicById(musicList[i].id).then(res=>{
+                    console.log(res)
+                    if(res.data.success == true){
+                        _getMusicUrl(musicList[i].id).then(res => {
+                           console.log(res.data)
+                           if(res.code == 200){
+                            url = res.data.data[0].url;
+                            /**Song 构造函数参数：1.下标、2.歌曲、3.歌曲路径、4.歌曲id */
+                            let song = new Song(i, musicList[i], url, musicList[i].id);
+                            playList.push(song);
+                            if (i == musicList.length - 1) {
+                                /**全局播放事件
+                                 * @playList         处理后的播放列表
+                                 * @index            音乐列表中音乐开始播放的位置
+                                 * @musicList        歌曲列白，用于播放器中歌单展示
+                                 * @id               唯一标识，用于显示当前播放歌曲的列表
+                                 */
+                                this.$bus.emit("playMusic", playList, index,musicList,id);
+                            }
+                           } 
+                        });
                     }
-
-                });
+                })
+                
             }
 
         },

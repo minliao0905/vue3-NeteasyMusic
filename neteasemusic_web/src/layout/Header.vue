@@ -1,44 +1,5 @@
 <template>
-  <div :class="headClass">
-    <div :class="program + 'header-title'">
-<!--      左边按钮  返回主界面，窗口尺寸 最大化和最小化 -->
-      <div :class="program + 'header-title-left'"
-          @mouseenter="handleMouseEnter"
-          @mouseleave="handleMouseLeave"
-      >
-        <div class="item" @click="handleHomeButton">
-          <transition name="header-side">
-            <i class="iconfont icon-home"   />
-          </transition>
-        </div>
-        <div class="item" @click="handleExistMaxScreen">
-          <transition name="header-side">
-            <i class="iconfont icon-zuixiaohua"   />
-          </transition>
-        </div>
-        <div class="item" @click="handleMaxScreen">
-          <transition name="header-side">
-            <i class="iconfont icon-zuidahua"   />
-          </transition>
-        </div>
-      </div>
-      <div :class="program + 'header-title-right'">
-          <div
-              :class="[
-              `item vbestui-iconfont icon-hou`,
-              `${'header-' + theme + '-title-icon'}`,
-            ]"
-              @click="go(-1)"
-          ></div>
-          <div
-              :class="[
-              `item vbestui-iconfont icon-qian`,
-              `${'header-' + theme + '-title-icon'}`,
-            ]"
-              @click="go(1)"
-          ></div>
-      </div>
-    </div>
+  <div :class="headClass"> 
     <div :class="program+ 'header-main'">
       <div class="left">
         search组件
@@ -47,7 +8,7 @@
         <el-avatar size='35px' class="avatar"    
         @click="handleAvatarClick"
         />
-         
+         <div class="user-name" v-if='user.name==null'>未登录</div>
         <div class="item">
             <el-popover
                 placement="bottom-start"
@@ -91,6 +52,16 @@ export default {
   name: "LayoutHeader",
   mixins:[theme],
   components:{Login},
+  props:{
+    user:{
+      type:Object,
+      default:()=>{
+       return  { 
+        name:null,
+        password:null}
+       }
+    }
+  },
   data(){
     return {
       isShow:true,
@@ -152,7 +123,7 @@ export default {
       flex:1;
       display:flex;
       align-items:center;
-      justify-content: space-around;
+      justify-content: space-around; 
       .item{
         width:18px;
         height: 18px;
@@ -178,7 +149,7 @@ export default {
       flex:1;
       display: flex;
       align-items:center;
-      justify-content: space-around;
+      justify-content: space-around; 
       .item{
         flex:1;
         text-align: center;
@@ -187,7 +158,7 @@ export default {
     }
   }
   &-main{
-    width: 82%;
+    width: 100%;
     height: 100%;
     display: flex;
     .left{
@@ -200,6 +171,10 @@ export default {
       display: flex;
       justify-content: flex-end;
       align-items: center;
+       .user-name{
+        margin:0 5px ;
+        font-size:12px
+      }
       .item{
         width: 60px;
         text-align: center;
