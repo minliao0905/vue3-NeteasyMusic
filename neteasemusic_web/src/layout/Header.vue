@@ -5,11 +5,14 @@
         search组件
       </div>
       <div class="right">
-        <el-avatar size='35px' class="avatar"    
+        <!-- <el-avatar size='default' class="avatar"    
         @click="handleAvatarClick"
-        />
-         <div class="user-name" v-if='user.name==null'>未登录</div>
-        <div class="item">
+        /> -->
+        <div class='user-box' :class="`${theme + '-userbox'}`">
+          <div class="nologin" v-if="username!=null" @click="showLogin">退出登录</div>
+           <div class="user-name"  @click="showLogin">{{username==null?'未登录':username}}</div>
+        </div>
+         <div class="item">
             <el-popover
                 placement="bottom-start"
                 :width="200"
@@ -42,36 +45,29 @@
    
   </div>
    <login v-show='isLogin' class="login"></login> 
- 
+   <register v-show='isRegister' class='register'></register>
 </template>
 
 <script>
-import {theme} from "@/mixin/global/theme.js";
+import {theme,username} from "@/mixin/global/theme.js";
 import Login from 'content/user/Login';
+import Register from 'content/user/Regiter';
 export default {
   name: "LayoutHeader",
   mixins:[theme],
-  components:{Login},
-  props:{
-    user:{
-      type:Object,
-      default:()=>{
-       return  { 
-        name:null,
-        password:null}
-       }
-    }
-  },
+  components:{Login,Register},
+   
   data(){
     return {
       isShow:true,
       isLogin:false,
+      isRegister:false,
     }
   },
   computed:{
     headClass(){
         return [`${this.program + this.theme  + "-header"}`,"dance-music-header"];
-    },
+    }  
   },
   methods:{
     handleAvatarClick (){
@@ -80,7 +76,15 @@ export default {
    hiddenLogin() {
       this.isLogin = false
     },
-       
+   showLogin(){
+    this.isLogin = true
+   } , 
+   hiddenRegister(){
+    this.isRegister = false
+   }  ,
+   showRegister(){
+    this.isRegister = true
+   },
     //设置主题颜色 改变 通过修改 this.$store.commit("setTheme", "light");
     handleThemeLight(){
       this.$store.commit("setTheme",'light');
@@ -171,10 +175,7 @@ export default {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-       .user-name{
-        margin:0 5px ;
-        font-size:12px
-      }
+      
       .item{
         width: 60px;
         text-align: center;
@@ -190,6 +191,20 @@ export default {
       }
     }
   }
+}
+.user-box{ 
+  display:flex;
+  align-items: center;
+  font-size:14px; 
+    .user-name{
+        margin:0 5px ; 
+      }
+}
+.dark-userbox{
+  color:#fff
+}
+.light-userbox .green-userbox{
+  color:black
 }
 
 //设置气泡的样式 因为显示器气泡内的内容，元素不在right 内，被包含在body中，所以原来的样式无效

@@ -2,7 +2,7 @@
     <div  class="song-list" v-if="musicList.length">
       <el-table :data="musicList" style="width:100%; cursur:pointer"
           @row-dblclick="handleDbclick"
-          :row-class-name="tableRowClassName"
+          :row-class-name="tableRowClassName" 
       >
         <el-table-column type="index" :index="indexMethod">
         </el-table-column>

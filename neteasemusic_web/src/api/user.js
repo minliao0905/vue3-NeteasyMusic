@@ -1,22 +1,27 @@
-import request from '@/api/request'
+import request from './login_request'
 
-export function _loginbyphone(phone,password){
+export function _loginbyphone(username,password){
     return request({
-        url:'/login/cellphone',
-        params:{
-            phone:phone,
+        url:'/user/login',
+        data:{
+            username:username,
             password:password
-        }
+        },
+        // 设置请求头，设置传参格式为json 为避免乱码设置 charset=utf-8
+        Headers:{"Content-Type":"application/json;charset=UTF-8"}, 
+        method:'post'
     })
-}
-
-export function _loginbyemail(email,password){
+} 
+export function _register(username,password){
     return  request({
-        url:'/login',
-        params:{
-            email:email,
+        url:'/user/register',
+        data:{
+           username:username,
             password:password
-        }
+        }, 
+        // 设置请求头，设置传参格式为json 为避免乱码设置 charset=utf-8
+        Headers:{"Content-Type":"application/json;charset=UTF-8"}, 
+        method:'post'
     })
 }
 

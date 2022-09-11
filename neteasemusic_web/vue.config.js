@@ -8,13 +8,13 @@ module.exports = defineConfig({
         'components': '@/components',
         'content': '@/components/content',
         'common': '@/components/common',
-        'assets': '@/assets',
-        'network': '@/network',
+        'assets': '@/assets', 
         'views': '@/views',
         'layout':'@/layout',
         'mixin' : '@/mixin',
         'utils' : '@/utils',
-        'player' : '@/player'
+        'player' : '@/player',
+        'api':'@/api'
       }
     }
   }, 

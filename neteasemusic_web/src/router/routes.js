@@ -2,7 +2,9 @@ import MusicListDetail from "@/views/musiclist-detail/MusicListDetail";
 
 const Individuation = () =>import('@/views/individuation/individuation');
 const AllMusicList = () => import('@/views/AllMusicList/all-music-list');
-const MvMusicList = () =>import('@/views/MV/MusicList') 
+const Mv = () =>import('@/views/MV/mv') 
+const NewSongs = ()=>import('@/views/new-songs/new-songs')
+const MvDetail = () => import("@/views/MV/mv-detail")
 const routes = [
     
     {
@@ -23,8 +25,16 @@ const routes = [
     },
     {
         path:'/mv',
-        component:MvMusicList
-    }
+        component:Mv
+    },
+    {
+        path:'/new-songs',
+        component:NewSongs
+    },
+    {
+        path: '/mv-detail/:id',
+        component: MvDetail
+    },
 
 
 ];

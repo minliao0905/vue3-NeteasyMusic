@@ -88,7 +88,7 @@ export default {
 
   .text-area {
     width: 100%;
-    margin: 10px 20px;
+    margin: 10px 14px;
     height: 60px;
     border: 1px solid var(--border);
     padding: 5px;

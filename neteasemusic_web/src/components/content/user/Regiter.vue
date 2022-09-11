@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="back"> 
-      <div class="x" @click="hiddenLogin">
+      <div class="x" @click="hiddenRegister">
         <i class="vbestui-iconfont icon-close">x</i>
       </div>
       <div class="son">
@@ -13,12 +13,12 @@
         <div class="from-item">
           <el-input
             type="text"
-            name="phone" 
+            name="phone"
+            id="phone"
             placeholder="请输入账号名"
             required
             clearable
-            v-model="phone"
-            @blur="phoneVerify()"
+            v-model="phone" 
           />
           <p>{{phoneMessage}}</p>
         </div>
@@ -26,79 +26,95 @@
           <el-input
             type="password"
             name="password" 
-            placeholder="请输入密码"
+            placeholder="密码长度需为6-10位"
             show-password
             v-model="password"
           />
           <p>{{pwdMessage}}</p>
         </div>
-        <div class="from-item">
-          <el-button background="var(--main-color)" color="#fff" class="log" @click="login">登陆</el-button>
+          <div class="from-item">
+          <el-input
+            type="checkpassword"
+            name="checkpassword" 
+            placeholder="请再次输入注册密码"
+            show-password
+            v-model="checkpassword"
+          />
+          <p>{{pwdMessage}}</p>
         </div>
         <div class="from-item">
-          <div class="register" @click ="register">注册</div>
+          <el-button background="var(--main-color)" color="#fff" class="log" @click="register">注册</el-button>
+        </div>
+        <div class="from-item">
+          <div class="backTologin" @click="backToLogin">返回登录</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
- import {_loginbyphone} from  '@/api/user' 
-import { ElMessage } from 'element-plus'
+ import {_register} from  '@/api/user'
+import { ElMessage } from 'element-plus'; 
 export default {
-  name: "Login",
+  name: "Register",
   data() {
     return {
       phone: "",
       phoneMessage: "",
       password: "",
+      checkpassword:"",
       pwdMessage: "",
     };
   },
   methods: {
     /**登陆 */
-    login() {
-      _loginbyphone(this.phone, this.password).then((res) => {
+    register() {
+       if(this.do_submit()){ 
+        _register(this.phone, this.password).then((res) => {
         console.log(res)
-         if(res.data.code == 200){
-           this.showMessage()
-          this.$store.commit("addUser", this.phone); 
-           this.$parent.hiddenLogin();  
-        }else if(res.data.code !=200){
-          this.pwdMessage = '密码错误'
+        if (res.data.code == 0) {
+          this.phoneMessage = "该账号已被注册使用";
+        } else if(res.data.code==200){ 
+          // 注册成功 
+          this.showMessage()
+          this.$parent.hiddenRegister()
+          // 返回登录
         }
       });
+       }
     },
-    showMessage(){
+    // 密码验证格式
+    do_submit(){
+      if(this.password==''||this.checkpassword == ''){
+          this.pwdMessage = '密码不能为空'
+          return false
+      }
+       if(this.password!=this.checkpassword){
+            this.pwdMessage = '两次密码须填写不一致哟'
+            return false
+       }
+       let regex = /^(?=.*[a-z])(?=.*\d)[^]{6,10}$/;
+       if(!regex.test(this.password)){
+          this.pwdMessage = '密码必须包含数字和密码'
+          return false
+       }
+       return true
+    },
+     hiddenRegister(){
+      this.$parent.hiddenRegister()
+    },
+   showMessage(){
       ElMessage({
-         message:'登录成功！',
+         message:'注册成功！',
          type:'success'
       })
     },
-    register(){
-      this.$parent.hiddenLogin()
-      this.$parent.showRegister()
-    },
-    hiddenLogin(){
-      this.$parent.hiddenLogin()
-    },
-    /**手机号码验证 */
-    phoneVerify() {
-      // if (this.phone == "") {
-      //   this.phoneMessage = "请输入手机号";
-      //   return;
-      // } else {
-      //   /**res.data.exist=1说明有此账号 */
-      //   _phoneVerify(this.phone).then((res) => {
-      //     if (res.data.exist != 1) {
-      //       this.phoneMessage = "手机号错误";
-      //     } else {
-      //       this.phoneMessage = "";
-      //     }
-      //   });
-      // }
-    },
-    
+    backToLogin(){
+      console.log("qwe")
+      this.$parent.hiddenRegister()
+      this.$parent.showLogin()
+    }
+
   },
 };
 </script>

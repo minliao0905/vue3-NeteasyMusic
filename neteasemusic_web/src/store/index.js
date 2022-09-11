@@ -5,7 +5,7 @@ import detail from "./detail"
 export default createStore({
       state:{
           theme:'light',
-          user:null,
+          username:null,
           uid:null,
           cookie:null,
           isloading:false,
@@ -20,6 +20,10 @@ export default createStore({
           },
           hiddenLoading(state){
               state.isloading = false;
+          },
+          addUser(state,username){
+            state.username = username
+            localStorage.setItem('username',username);
           }
     },
     getters:{
@@ -28,6 +32,12 @@ export default createStore({
                 state.theme = localStorage.getItem('theme');
             }
             return state.theme;
+        },
+        getUsername(state){
+            if (localStorage.getItem('username')) {
+                state.username = localStorage.getItem('username');
+            }
+            return state.username; 
         }
     },
     modules:{

@@ -49,16 +49,7 @@ export default {
           content: "个性推荐",
         },
         { link: "/AllMusicList", icon: "iconfont icon-gedan", content: "歌单" },
-        {
-          link: "/ranklist",
-          icon: "iconfont icon-PCbofangye_paihangbang",
-          content: "排行榜",
-        },
-        {
-          link: "/artist-list",
-          icon: "iconfont icon-mansingle",
-          content: "歌手",
-        },
+       
         { link: "/mv", icon: "iconfont icon-shipin", content: "MV" },
         // { link: "/mv-list", icon: "iconfont icon-MV", content: "全部MV" },
         {

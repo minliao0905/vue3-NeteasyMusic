@@ -8,6 +8,9 @@ export const theme={
         theme(){
             return this.$store.getters.getTheme ;
         },
+        username(){
+            return this.$store.getters.getUsername;
+        },
         /**获取当前theme */
         getTheme() {
             let theme = '';
