@@ -51,6 +51,7 @@
 <script>
 import {theme,username} from "@/mixin/global/theme.js";
 import Login from 'content/user/Login';
+ 
 import Register from 'content/user/Regiter';
 export default {
   name: "LayoutHeader",

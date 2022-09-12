@@ -13,7 +13,7 @@ module.exports = defineConfig({
         'layout':'@/layout',
         'mixin' : '@/mixin',
         'utils' : '@/utils',
-        'player' : '@/player',
+        'player' : '@/Play',
         'api':'@/api'
       }
     }

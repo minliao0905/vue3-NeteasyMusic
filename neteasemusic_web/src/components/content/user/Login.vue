@@ -14,7 +14,7 @@
           <el-input
             type="text"
             name="phone" 
-            placeholder="请输入账号名"
+            placeholder="请输入手机号"
             required
             clearable
             v-model="phone"
@@ -43,7 +43,8 @@
   </div>
 </template>
 <script>
- import {_loginbyphone} from  '@/api/user' 
+//  import {_loginbyphone} from  '@/api/user' 
+import {_Login,_phoneVerify} from 'api/login'
 import { ElMessage } from 'element-plus'
 export default {
   name: "Login",
@@ -57,17 +58,49 @@ export default {
   },
   methods: {
     /**登陆 */
-    login() {
-      _loginbyphone(this.phone, this.password).then((res) => {
+    // login() {
+    //   _loginbyphone(this.phone, this.password).then((res) => {
+    //     console.log(res)
+    //      if(res.data.code == 200){
+    //        this.showMessage()
+    //       this.$store.commit("addUser", this.phone); 
+    //        this.$parent.hiddenLogin();  
+    //     }else if(res.data.code !=200){
+    //       this.pwdMessage = '密码错误'
+    //     }
+    //   });
+    // },
+    //***登录 */
+    login(){
+      _Login(this.phone,this.password).then((res)=>{
         console.log(res)
-         if(res.data.code == 200){
-           this.showMessage()
-          this.$store.commit("addUser", this.phone); 
-           this.$parent.hiddenLogin();  
-        }else if(res.data.code !=200){
+        if(res.data.code!=200){
           this.pwdMessage = '密码错误'
+        }else{
+           this.hiddenLogin()
+           this.$store.commit("addUser", res.data);
+          this.$parent.hiddleLogin();
+          localStorage.setItem('cookie',res.data.cookie);
+          localStorage.setItem('avatar',res.data.profile.avatarUrl);
+          localStorage.setItem('uid',res.data.profile.userId)
         }
-      });
+      })
+    },
+     /**手机号码验证 */
+    phoneVerify() {
+      if (this.phone == "") {
+        this.phoneMessage = "请输入手机号";
+        return;
+      } else {
+        /**res.data.exist=1说明有此账号 */
+        _phoneVerify(this.phone).then((res) => {
+          if (res.data.exist != 1) {
+            this.phoneMessage = "手机号错误";
+          } else {
+            this.phoneMessage = "";
+          }
+        });
+      }
     },
     showMessage(){
       ElMessage({
@@ -81,24 +114,7 @@ export default {
     },
     hiddenLogin(){
       this.$parent.hiddenLogin()
-    },
-    /**手机号码验证 */
-    phoneVerify() {
-      // if (this.phone == "") {
-      //   this.phoneMessage = "请输入手机号";
-      //   return;
-      // } else {
-      //   /**res.data.exist=1说明有此账号 */
-      //   _phoneVerify(this.phone).then((res) => {
-      //     if (res.data.exist != 1) {
-      //       this.phoneMessage = "手机号错误";
-      //     } else {
-      //       this.phoneMessage = "";
-      //     }
-      //   });
-      // }
-    },
-    
+    }, 
   },
 };
 </script>
