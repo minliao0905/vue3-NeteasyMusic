@@ -2,8 +2,10 @@
 <template>
   <div id="app">
     <LayoutHeader/>
-    <LayoutAside/>
+    <div class="app-body">
+        <LayoutAside/>
     <LayoutArticle/>
+    </div> 
     <LayoutFooter/>
   </div>
   
@@ -31,5 +33,9 @@ export default {
   height:100vh;
   overflow:hidden;
   position: relative;
+}
+.app-body{
+  display: flex;
+  height: 100%;
 }
 </style>

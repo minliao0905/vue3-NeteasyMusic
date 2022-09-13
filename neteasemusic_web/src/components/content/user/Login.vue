@@ -78,6 +78,7 @@ export default {
           this.pwdMessage = '密码错误'
         }else{
            this.hiddenLogin()
+           this.showMessage()
            console.log(res.data.account.userName)
            this.$store.commit("addUser", res.data.account.userName);
           //  this.$parent.hiddleLogin();

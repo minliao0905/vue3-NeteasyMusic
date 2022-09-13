@@ -7,6 +7,7 @@ export default createStore({
       state:{
           theme:'light',
           username:null,
+          avatar:"",
           uid:null,
           cookie:null,
           isloading:false,
@@ -25,6 +26,10 @@ export default createStore({
           addUser(state,username){
             state.username = username
             localStorage.setItem('username',username);
+          },
+          setAvatar(state,avatar){
+            state.avatar = avatar
+            localStorage.setItem('avatar',avatar)
           }
     },
     getters:{
@@ -39,6 +44,13 @@ export default createStore({
                 state.username = localStorage.getItem('username');
             }
             return state.username; 
+        }
+        ,
+        getUserAvatar(state){
+            if(localStorage.getItem('avatar')){
+                state.avatar = localStorage.getItem('avatar');
+            }
+            return state.avatar;
         }
     },
     modules:{

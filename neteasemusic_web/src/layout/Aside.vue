@@ -101,8 +101,10 @@ export default {
 .dance-music-aside {
   height: calc(100% - 58px - 60px);
   width: 18%;
+  min-width: 200px;
   float: left;
   padding-left: 1px;
+  border-right:2px solid #dcdfe6;
   &-light {
     background: var(--light-aside-bg-color);
   }
@@ -161,6 +163,9 @@ export default {
       padding: 0px 10px;
     }
   }
+}
+:deep(.el-menu){
+  border-right:none;
 }
 
 </style>

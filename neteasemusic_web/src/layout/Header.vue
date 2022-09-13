@@ -2,18 +2,11 @@
   <div :class="headClass"> 
     <div :class="program+ 'header-main'">
       <!-- search模块 -->
-      <div class="left">
-       <input  type="text" placeholder="输入歌名"  v-model="keywords"/> <button @click="search">搜索</button>
-       <!-- 解决自动填充 -->
-       <input type="text" class="fake-input">
-      </div>
+       <search-component :keywords="keywords"></search-component>
       <div class="right">
-        <!-- <el-avatar size='default' class="avatar"    
-        @click="handleAvatarClick"
-        /> -->
-        <div class='user-box' :class="`${theme + '-userbox'}`">
-          <div class="nologin" v-if="username!=null" @click="showLogin">退出登录</div>
-          
+        
+        <div class='user-box' :class="`${theme + '-userbox'}`" @click="handleAvatarClick"> 
+            <el-avatar size='default' class="avatar"  :src='useravatar||""' /> 
            <div class="user-name"  @click="showLogin">{{username==null?'未登录':username}}</div>
         </div>
          <div class="item">
@@ -53,14 +46,14 @@
 </template>
 
 <script>
-import {theme,username} from "@/mixin/global/theme.js";
-import Login from 'content/user/Login';
- 
-import Register from 'content/user/Regiter';
+import {theme,username,useravatar} from "@/mixin/global/theme.js";
+import Login from 'content/user/Login'; 
+import Register from 'content/user/Regiter'; 
+import SearchComponent from '@/views/search/searchComponent.vue';
 export default {
   name: "LayoutHeader",
   mixins:[theme],
-  components:{Login,Register},
+  components:{Login,Register ,SearchComponent},
    
   data(){
     return {
@@ -135,9 +128,8 @@ export default {
   align-items:center;
   height:58px;
   width:100%;
-  border: 1px solid #312828;
-  &-title{
-    width:18%;
+  border-bottom: 1px solid #d4c9c9;
+  &-title{ 
     height:100%;
     text-align:center;
     display: flex;

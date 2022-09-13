@@ -11,6 +11,9 @@ export const theme={
         username(){
             return this.$store.getters.getUsername;
         },
+        useravatar(){
+            return this.$store.getters.getUserAvatar;
+        },
         /**获取当前theme */
         getTheme() {
             let theme = '';

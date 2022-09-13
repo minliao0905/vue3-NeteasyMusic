@@ -85,7 +85,7 @@ export default {
   display: flex;
   overflow: hidden;
   .base-left{
-    width: 23%;
+    width: 200px;
     .el-avatar{
      margin: 10px;
     }
