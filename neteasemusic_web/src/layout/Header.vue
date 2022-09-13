@@ -1,8 +1,11 @@
 <template>
   <div :class="headClass"> 
     <div :class="program+ 'header-main'">
+      <!-- search模块 -->
       <div class="left">
-        search组件
+       <input  type="text" placeholder="输入歌名"  v-model="keywords"/> <button @click="search">搜索</button>
+       <!-- 解决自动填充 -->
+       <input type="text" class="fake-input">
       </div>
       <div class="right">
         <!-- <el-avatar size='default' class="avatar"    
@@ -10,6 +13,7 @@
         /> -->
         <div class='user-box' :class="`${theme + '-userbox'}`">
           <div class="nologin" v-if="username!=null" @click="showLogin">退出登录</div>
+          
            <div class="user-name"  @click="showLogin">{{username==null?'未登录':username}}</div>
         </div>
          <div class="item">
@@ -63,6 +67,7 @@ export default {
       isShow:true,
       isLogin:false,
       isRegister:false,
+      keywords:''
     }
   },
   computed:{
@@ -107,12 +112,24 @@ export default {
   //  路由
     go(index){
       this.$router.go(index);
+    },
+    search(){
+      console.log(this.keywords)
+      this.$router.push("/search/" + this.keywords)
     }
   }
 }
 </script>
 
 <style scoped lang="less">
+// .fake-input {
+//   width: 0;
+//   height: 0;
+//   font-size: 0;
+//   border: none;
+//   outline: none;
+//   padding: 0;
+// }
 .dance-music-header{
   display:flex;
   align-items:center;

@@ -5,6 +5,7 @@ const AllMusicList = () => import('@/views/AllMusicList/all-music-list');
 const Mv = () =>import('@/views/MV/mv') 
 const NewSongs = ()=>import('@/views/new-songs/new-songs')
 const MvDetail = () => import("@/views/MV/mv-detail")
+const Search =()=>import("@/views/search/search")
 const routes = [
     
     {
@@ -35,6 +36,12 @@ const routes = [
         path: '/mv-detail/:id',
         component: MvDetail
     },
+    {
+        name:'search',
+        path:'/search/:keyword',
+        component:Search,
+        
+    }
 
 
 ];

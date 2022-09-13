@@ -78,8 +78,9 @@ export default {
           this.pwdMessage = '密码错误'
         }else{
            this.hiddenLogin()
-           this.$store.commit("addUser", res.data);
-          this.$parent.hiddleLogin();
+           console.log(res.data.account.userName)
+           this.$store.commit("addUser", res.data.account.userName);
+          //  this.$parent.hiddleLogin();
           localStorage.setItem('cookie',res.data.cookie);
           localStorage.setItem('avatar',res.data.profile.avatarUrl);
           localStorage.setItem('uid',res.data.profile.userId)

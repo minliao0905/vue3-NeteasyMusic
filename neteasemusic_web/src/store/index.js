@@ -2,6 +2,7 @@ import {createStore} from "vuex";
 import musiclist from "./musiclist"
 import discover from "./discover"
 import detail from "./detail"
+import search from './search'
 export default createStore({
       state:{
           theme:'light',
@@ -44,5 +45,6 @@ export default createStore({
          musiclist,
         discover,
         detail,
+        search
     }
 })
