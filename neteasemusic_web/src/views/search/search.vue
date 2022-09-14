@@ -8,7 +8,7 @@
         <div class="search_none">抱歉，并未搜索到任何结果</div></div>
       <div v-else>
         <song-list :music-list='songsList' ref="search_songList" 
-            :length="length"
+            :length="length" notime
             ></song-list>
       </div>
       </div> 
@@ -37,7 +37,8 @@ export default {
     methods:{
        async getDataList(){  
            this.keywords = this.$route.params.keywords
-           if(!this.keywords) return   
+           if(!this.keywords) return  
+           debugger
            this.loading= true 
            this.songsList = []
               _search(this.keywords).then(res=>{
@@ -63,16 +64,24 @@ export default {
             })  
             // 若访问请求时间超过5s则判断请求失败
             setTimeout(()=>{
+                if(this.songsList.length!=0){
+                    this.loading = false
+                    this.showMessage("搜索成功！","success")
+                }
+            },0)
+            setTimeout(()=>{
                 this.loading = false
             if(this.songsList.length == 0){
                  this.showMessage("搜索失败！","error")      
-            }else{
-                this.showMessage("搜索成功！","success")
-            }
+            } 
             },5000)
             
         },
         showMessage(message,type){
+            if(type == 'error'){
+          ElMessage.error(message)
+        return
+         }
               ElMessage({
          message: message,
          type:type
@@ -115,5 +124,5 @@ export default {
     margin:0 auto;
     color:grey;
 }
-
+ 
 </style>

@@ -44,8 +44,8 @@
 </template>
 <script>
 //  import {_loginbyphone} from  '@/api/user' 
-import {_Login,_phoneVerify} from 'api/login'
-import { ElMessage } from 'element-plus'
+import {_Login,_phoneVerify} from 'api/login' 
+import {showError,showMessage} from "utils/latest"
 export default {
   name: "Login",
   data() {
@@ -78,14 +78,16 @@ export default {
           this.pwdMessage = '密码错误'
         }else{
            this.hiddenLogin()
-           this.showMessage()
-           console.log(res.data.account.userName)
-           this.$store.commit("addUser", res.data.account.userName);
+            showMessage("登录成功","success")
+           this.$store.commit("addUser", res.data.profile.userId);
           //  this.$parent.hiddleLogin();
           localStorage.setItem('cookie',res.data.cookie);
           localStorage.setItem('avatar',res.data.profile.avatarUrl);
+           this.$store.commit("setAvatar", res.data.profile.avatarUrl);
           localStorage.setItem('uid',res.data.profile.userId)
         }
+      },(err)=>{
+          showError()
       })
     },
      /**手机号码验证 */
@@ -104,12 +106,7 @@ export default {
         });
       }
     },
-    showMessage(){
-      ElMessage({
-         message:'登录成功！',
-         type:'success'
-      })
-    },
+      
     register(){
       this.$parent.hiddenLogin()
       this.$parent.showRegister()

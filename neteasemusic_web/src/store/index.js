@@ -3,6 +3,8 @@ import musiclist from "./musiclist"
 import discover from "./discover"
 import detail from "./detail"
 import search from './search'
+import { _getUserDetail } from "@/api/login";
+import { showError } from "@/utils/latest";
 export default createStore({
       state:{
           theme:'light',
@@ -23,9 +25,19 @@ export default createStore({
           hiddenLoading(state){
               state.isloading = false;
           },
-          addUser(state,username){
-            state.username = username
-            localStorage.setItem('username',username);
+          addUser(state,uid){
+            if(uid!=""){
+                _getUserDetail(uid).then((res)=>{
+                    console.log(res)
+                    if(res.data.code== 200){ 
+                         state.username = res.data.profile.nickname
+                    localStorage.setItem('username',state.username);
+                    } 
+                },(error)=>{
+                    showError()
+                })
+            }
+            
           },
           setAvatar(state,avatar){
             state.avatar = avatar

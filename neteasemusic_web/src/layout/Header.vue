@@ -6,8 +6,9 @@
       <div class="right">
         
         <div class='user-box' :class="`${theme + '-userbox'}`" @click="handleAvatarClick"> 
-            <el-avatar size='default' class="avatar"  :src='useravatar||""' /> 
-           <div class="user-name"  @click="showLogin">{{username==null?'未登录':username}}</div>
+            <el-avatar size='default' class="avatar"  :src='useravatar||""' :key="useravatar" /> 
+           <div class="user-name" >{{username==null?'未登录':username}}</div>
+           <div class="user-name" @click.stop="showlogout" v-if="username!=null">退出登录</div>
         </div>
          <div class="item">
             <el-popover
@@ -43,13 +44,31 @@
   </div>
    <login v-show='isLogin' class="login"></login> 
    <register v-show='isRegister' class='register'></register>
+    <el-dialog
+    v-model="centerDialogVisible"
+    title="Warning"
+    width="30%"
+    align-center
+  >
+    <span>确定要退出登录吗？</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取消</el-button> 
+        <el-button type="primary" @click="logout"
+          >确认</el-button
+        >
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
-import {theme,username,useravatar} from "@/mixin/global/theme.js";
+import {theme} from "@/mixin/global/theme.js";
 import Login from 'content/user/Login'; 
 import Register from 'content/user/Regiter'; 
 import SearchComponent from '@/views/search/searchComponent.vue';
+import {_Logout} from 'api/login' 
+import {ElMessage} from 'element-plus'
 export default {
   name: "LayoutHeader",
   mixins:[theme],
@@ -60,7 +79,8 @@ export default {
       isShow:true,
       isLogin:false,
       isRegister:false,
-      keywords:''
+      keywords:'',
+      centerDialogVisible:false,
     }
   },
   computed:{
@@ -109,6 +129,39 @@ export default {
     search(){
       console.log(this.keywords)
       this.$router.push("/search/" + this.keywords)
+    },
+    showlogout(){
+      if(this.username!="")
+      this.centerDialogVisible = true;
+      else{
+          ElMessage({
+          message:'您当前并未登录！',
+          type:'info'
+         }) 
+         return 
+      }
+    },
+    logout(){
+      _Logout().then((res) =>{
+        console.log(res)
+        if(res.data.code == 200){
+           ElMessage({
+          message:'退出成功',
+          type:'success'
+         }) 
+           this.$store.commit("addUser", "");   
+            this.$store.commit("setAvatar", "");   
+          localStorage.setItem('avatar',"");
+          localStorage.setItem('uid',"")
+          
+         this.centerDialogVisible = false
+        }else{
+           ElMessage({
+          message:'退出失败',
+          type:'error'
+         })
+        } 
+      })
     }
   }
 }

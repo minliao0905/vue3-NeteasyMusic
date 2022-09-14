@@ -35,6 +35,10 @@ const router = useRouter()
     font-size:12px;
   }
  }
+ :deep(.el-input__wrapper.is-focus ){
+    box-shadow: 0 0 0 1px red inset;
+}
+
  
 </style> 
 

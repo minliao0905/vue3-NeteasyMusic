@@ -23,7 +23,7 @@
         </el-table-column>
         <el-table-column prop="artist" label="歌手"/>
         <el-table-column prop="album" label="专辑"></el-table-column>
-        <el-table-column prop="time" label="时间" ></el-table-column>
+        <el-table-column prop="time" label="时间" v-if="!notime" ></el-table-column>
       </el-table>
     </div>
 </template>
@@ -53,6 +53,10 @@ export default {
     length:{
       type:Number,
       default:null,
+    },
+    notime:{
+      type:Boolean,
+      default:false,
     }
   },
   data(){
