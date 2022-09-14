@@ -3,7 +3,7 @@
      <div class="search-suggest-title" v-if="keywords">
         搜索" <span>{{ keywords }}</span> "相关的结果
       </div>
-      <div class="search-con" >
+      <div class="search-con" v-loading="loading">
         <div v-if="songsList.length==0" class="search_box">
         <div class="search_none">抱歉，并未搜索到任何结果</div></div>
       <div v-else>
@@ -31,14 +31,16 @@ export default {
             keyword:'',
             songsList:[],
             songNum:0,
-            loading:true
+            loading:false,
         }
     },
     methods:{
        async getDataList(){  
            this.keywords = this.$route.params.keywords
-           if(!this.keywords) return 
-           await  _search(this.keywords).then(res=>{
+           if(!this.keywords) return   
+           this.loading= true 
+           this.songsList = []
+              _search(this.keywords).then(res=>{
                 console.log(res)
                 let dataList = []
                 if(res.data.code==200){
@@ -46,25 +48,29 @@ export default {
                   dataList = res.data.result.songs
                   this.sonNum = res.data.result.songCount
                 } 
-                // 对保存的data数据进行处理 方便songlist 处理
+                // 对保存的data数据进行处理 方便songlist 处理 
                dataList.forEach ((item)=>{
                     let obj = {
                         name:item.name,
                         mv:item.mv,
                         id:item.id,
-                        artist:item.ar[0].name,
-                        album:item.ar[0].alia[0],
-                        picUrl:item.al.picUrl
+                        artist:item?.ar[0].name,
+                        album:item?.ar[0].alia[0],
+                        picUrl:item?.al.picUrl
                     }
                     this.songsList.push(obj)
                 })
-            }) 
-
-            if(!this.songsList){
-                 this.showMessage("加载失败！","error")      
+            })  
+            // 若访问请求时间超过5s则判断请求失败
+            setTimeout(()=>{
+                this.loading = false
+            if(this.songsList.length == 0){
+                 this.showMessage("搜索失败！","error")      
             }else{
                 this.showMessage("搜索成功！","success")
             }
+            },5000)
+            
         },
         showMessage(message,type){
               ElMessage({
@@ -74,13 +80,18 @@ export default {
         }
     },
     created(){
- this.getDataList() 
+     this.getDataList() 
     },
     mounted() { 
        
     },
     computed:{
-        ...mapState({searchList:(state)=>state.search.searchList})
+        ...mapState({searchList:(state)=>state.search.searchList}), 
+    },
+    watch:{
+        $route(){
+            this.getDataList()
+        }
     }
 
 }

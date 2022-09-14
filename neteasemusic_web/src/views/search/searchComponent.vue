@@ -1,8 +1,8 @@
 <template>
    <div class='searchComponet'>
     <div class="search_con">
-       <el-input placeholder="搜索歌手/歌名/歌词" v-model="keyword" class="searchinput"></el-input>
-       <el-button color="red"  class="searchbtn" @click="onSearch">搜索</el-button>
+       <el-input placeholder="搜索歌手/歌名/歌词" v-model="keyword" class="searchinput" clearable @change="onSearch"></el-input>
+       <el-button color="red"  class="searchbtn" @click="onSearch"  >搜索</el-button>
     </div> 
    </div> 
 </template>   
