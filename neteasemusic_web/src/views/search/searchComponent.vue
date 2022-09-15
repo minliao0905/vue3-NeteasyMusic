@@ -2,7 +2,7 @@
    <div class='searchComponet'>
     <div class="search_con">
        <el-input placeholder="搜索歌手/歌名/歌词" v-model="keyword" class="searchinput" clearable @change="onSearch"></el-input>
-       //解决密码自动填充的问题123
+       <!-- 解决密码自动填充的问题 -->
        <el-input type="text" style="position: fixed; bottom: -99999px;"/>
        <el-button color="red"  class="searchbtn" @click="onSearch"  >搜索</el-button>
     </div> 
