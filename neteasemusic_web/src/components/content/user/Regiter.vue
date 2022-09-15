@@ -79,7 +79,7 @@
           />
            <el-button  @click="getCode" :disabled="hasCode==1" background="var(--main-color)" class="codesend">
              <span v-if="hasCode!=1">发送</span>
-             <span  v-if="hasCode==1" >已发送{{timecount}}秒</span>
+             <span  v-if="hasCode==1" >{{timecount}}秒</span>
             </el-button>   
           </div>  
         </el-form-item>  
@@ -110,6 +110,7 @@ export default {
       password: "", 
       captcha:"" , // 验证码
       },
+      checkpassword:"",
       MessageCode :-1, 
       MessageContent:'',
          captchaMessage:"发送",
@@ -137,14 +138,26 @@ export default {
                 if(res1.data.code == 200){
                   // 注册
                   _Register(this.ruleForm).then((res2) => {
-                    // console.log(res2)
+                    console.log(res2)
                       if(res2.data.code ==200){
                           showMessage("注册成功",'success')
                         this.hiddenRegister()
                       }else{
-                          showMessage("注册失败",'error') 
+                          showMessage(res2.data.message,'error') 
                       }
-                    })
+                    }).catch((error) => {
+                 if (error.response) {
+                  showMessage(error.response.data.message,'error')
+                  console.log(error.response.data);   
+            } else if (error.request) {
+              console.log(error.request);
+                 showMessage(error.request.data.message,'error')
+           } else {
+            // console.log('Error', error.message);
+             showMessage(error.message,'error')
+          }
+              //  console.log(error.config);
+  });
                 } 
             },(err)=>{
               console.log(err) 
@@ -157,16 +170,7 @@ export default {
     /** 获取验证码, 在获取验证码之前，必须对昵称进行重复性认证 ，不然会返回505报错*/ 
     getCode(){
       if(this.do_submit()){  
-        console.log("sjwejwer")
-       _checkNickName(this.ruleForm.nickname).then((res)=>{
-         console.log(res)
-         if(res.data.code!=200){
-          this.MessageCode = 1
-            this.MessageContent ="您的昵称重复，请重新输入"
-            this.ruleForm.nickname = ""
-            return ;
-         } 
-       })
+        console.log("sjwejwer") 
        _getCaptcha(this.ruleForm.phone).then((res)=>{
         console.log(res)
         this.hasCode = 1
@@ -188,8 +192,30 @@ export default {
 			}, 1000)} 
      }
     },
+    // 检测昵称是否重复
+    checkNick(){
+      let rs = true
+      _checkNickName(this.ruleForm.nickname).then((res)=>{
+         console.log(res)
+         if(res.data.code!=200){
+            this.MessageCode = 1
+            this.MessageContent = res.data.message
+            this.ruleForm.nickname = "" 
+            rs = false 
+         } 
+        } ,(error)=>{
+        showError()
+        rs = false
+       })
+       return rs
+    },
     // 密码验证格式
     do_submit() { 
+      // 检查昵称是否正确
+      debugger
+       if(!this.checkNick()){
+        return false;
+       }
        var reg = /^1[3-9]\d{9}$/
        if(!reg.test(this.ruleForm.phone)||this.ruleForm.phone == ""){
         this.MessageCode = 2

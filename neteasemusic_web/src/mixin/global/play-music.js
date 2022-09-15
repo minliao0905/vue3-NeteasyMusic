@@ -3,6 +3,12 @@ import {Song} from "@/Play/playing";
 
 export const playMusic = {
     methods: {
+        /**全局播放事件
+                         * @playList         处理后的播放列表
+                         * @index            音乐列表中音乐开始播放的位置
+                         * @musicList        歌曲列白，用于播放器中歌单展示
+                         * @id               唯一标识，用于显示当前播放歌曲的列表
+                         */
         /**全局音乐播放方法
          * @param this.musicList 音乐列表
          *
@@ -24,20 +30,21 @@ export const playMusic = {
             let playList = [];
             for (let i = 0, length = musicList.length; i < length; i++) {
                 _getMusicUrl(musicList[i].id).then(res => {
-                    url = res.data.data[0].url;
+                    if(res.data.code == 200){
+                           url = res.data.data[0].url;
+                    console.log(url)
                     /**Song 构造函数参数：1.下标、2.歌曲、3.歌曲路径、4.歌曲id */
                     let song = new Song(i, musicList[i], url, musicList[i].id);
                     playList.push(song);
                     if (i == musicList.length - 1) {
-                        /**全局播放事件
-                         * @playList         处理后的播放列表
-                         * @index            音乐列表中音乐开始播放的位置
-                         * @musicList        歌曲列白，用于播放器中歌单展示
-                         * @id               唯一标识，用于显示当前播放歌曲的列表
-                         */
-                        console.log("music",playList)
+                         
+                        // console.log("music",playList)
                         this.$bus.emit("playMusic", playList, index,musicList,id);
                     }
+                    }else{
+                        console.log(res)
+                    }
+                 
                 });
             }
         },   

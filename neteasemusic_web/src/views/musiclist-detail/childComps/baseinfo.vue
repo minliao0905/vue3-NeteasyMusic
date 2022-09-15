@@ -72,7 +72,7 @@ export default {
   },
   methods:{
     handlePlayMusic(){
-        this.$emit("PlayMusic" );
+        this.$bus.emit("PlayMusic" );
 
     }
   }

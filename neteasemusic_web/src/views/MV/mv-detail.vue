@@ -21,7 +21,7 @@
           <recommends class="rec" :recommends="recommends" />
         </div>
       </div>
-      <div class="right">
+      <div class="layout-right">
         <div class="desc" v-if="detail.desc">
           <p class="p">MV介绍</p>
           <div class="base">
@@ -167,22 +167,28 @@ export default {
   width: 100%;
   /* height: 100%; */
   padding: 10px 10% 0px 10%;
-  /* overflow: hidden; */
+  display: flex;
 }
 /* .scroll {
   height: calc(100vh - 58px - 60px);
 } */
 .layout-left {
   display: inline-block;
-  width: 70%;
+  width:100%;
+}
+.video{
+  width:600px;
+  height:400px;
+  padding-right:20px;
 }
 .video-play {
   outline-style: none;
+  width:100%;
+  height:100%; 
 }
-.right {
+.layout-right {
   padding-left: 20px;
-  width: 30%;
-  float: right;
+  width: 30%; 
 }
 .clear {
   clear: both;

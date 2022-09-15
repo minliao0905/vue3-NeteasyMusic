@@ -141,7 +141,7 @@ export default {
   mounted() {
     /**list是音乐列表，index是要播放的音乐在列表中的位置，path是当前播放音乐的路由路径,musicList是歌单信息*/
     this.$bus.on("playMusic", (playList, index, musicList,id) => {
-      console.log(playList,musicList)
+      // console.log(playList,musicList)
           this.id=id;
           /**初始化播放列表 */
           this.playList = [];

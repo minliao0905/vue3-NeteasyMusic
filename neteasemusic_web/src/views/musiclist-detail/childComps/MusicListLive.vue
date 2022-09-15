@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     handleImgLoad() {
-      if (this.imgCount == this.subs.length) this.$emit("refresh");
+      if (this.imgCount == this.subs.length) this.$bus.emit("refresh");
       this.imgCount++;
     },
   },

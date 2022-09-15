@@ -8,12 +8,17 @@ export function _getMusicListDetail(id){
     })
 }
 
-/**获取歌曲url */
+/**获取歌曲url
+ * 
+ * 使用新版接口，可返回音乐是否可用，默认写死数据音质为无损音质 
+ */
+ 
 export function _getMusicUrl(id){
     return request({
-        url:'/song/url',
+        url:'/song/url/v1',
         params:{
-            id:id
+            id:id,
+            level:'lossless'     
         }
     })
 }

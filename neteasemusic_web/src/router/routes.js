@@ -7,7 +7,6 @@ const NewSongs = ()=>import('@/views/new-songs/new-songs')
 const MvDetail = () => import("@/views/MV/mv-detail")
 const Search =()=>import("@/views/search/search")
 const routes = [
-    
     {
         path:'/',
         redirect:'/individuation'

@@ -32,10 +32,13 @@ export default createStore({
                     if(res.data.code== 200){ 
                          state.username = res.data.profile.nickname
                     localStorage.setItem('username',state.username);
-                    } 
+                    }  
                 },(error)=>{
                     showError()
                 })
+            } else{
+                state.username = ""
+                localStorage.setItem('username',"");
             }
             
           },

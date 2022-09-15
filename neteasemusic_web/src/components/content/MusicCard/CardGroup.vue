@@ -161,6 +161,7 @@ function handleEnter(index) {
     height:100%;
     padding: 0px;
     max-width: 200px;
+    min-width:100px;
     img{
       width: 100%; 
       border-radius: 4px;
