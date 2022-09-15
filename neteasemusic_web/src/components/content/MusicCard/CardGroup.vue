@@ -21,7 +21,7 @@
                  <i class="iconfont icon-erji"></i>{{item.playCount}}</div>
              </transition>
            </template>
-           <img v-lazy="item.picUrl||item.coverImgUrl" @load="handleRefresh"/>
+           <img v-lazy="item.picUrl||item.coverImgUrl" @load="handleRefresh" :src="item.picUrl||item.coverImgUrl" :key="index" />
            <transition class="playlist-slide">
              <div class="playlist-play" v-show="currentIndex == index">
                <i class="iconfont icon-icon_play"></i>
